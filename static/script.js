@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 emptyState.style.display = 'none';
                 resultContent.style.display = 'flex';
                 
-                // Add timestamp to prevent caching
+                // Add timestamp to prevent caching for standard URL paths
                 const timestamp = new Date().getTime();
                 
                 if (data.video_url) {
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         videoEl.style.marginTop = '1rem';
                         resultContent.insertBefore(videoEl, resultAudio.parentElement);
                     }
-                    videoEl.src = `${data.video_url}?t=${timestamp}`;
+                    videoEl.src = data.video_url.startsWith('data:') ? data.video_url : `${data.video_url}?t=${timestamp}`;
                     videoEl.style.display = 'block';
                     
                     const pulseRing = document.querySelector('.pulse-ring');
@@ -121,9 +121,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         avatarDisplay.style.borderRadius = '20px';
                     }
                 } else {
-                    resultImage.src = `${data.image_url}?t=${timestamp}`;
+                    // If result-video is visible, hide it
+                    const videoEl = document.getElementById('result-video');
+                    if (videoEl) videoEl.style.display = 'none';
                     
-                    resultAudio.src = `${data.audio_url}?t=${timestamp}`;
+                    resultImage.style.display = 'block';
+                    resultAudio.parentElement.style.display = 'block';
+                    
+                    resultImage.src = data.image_url.startsWith('data:') ? data.image_url : `${data.image_url}?t=${timestamp}`;
+                    
+                    resultAudio.src = data.audio_url.startsWith('data:') ? data.audio_url : `${data.audio_url}?t=${timestamp}`;
                     resultAudio.load();
                     
                     // Optional: Play audio automatically after image loads

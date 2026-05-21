@@ -1,0 +1,22 @@
+# Python virtual environment
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+
+# Local files
+uploads/
+outputs/
+
+# Exclude checkpoint files
+*.pth
+Wav2Lip/checkpoints/
+wav2lip_checkpoints/
+
+# IDE configurations
+.idea/
+.vscode/
+
+# Local text logs/outputs
+out.txt

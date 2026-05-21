@@ -3,3 +3,4 @@ uvicorn
 python-multipart
 gTTS
 jinja2
+requests
