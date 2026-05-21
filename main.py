@@ -52,7 +52,7 @@ async def generate_avatar(
         }
         data = {
             'text': script,
-            'model': 'voiceai-tts-v1-latest'
+            'model': 'voiceai-tts-v1-latest',
             'voice_id': '3e14a0dc-6735-48a4-a827-1f53a13fefd9'
         }
         
@@ -72,8 +72,8 @@ async def generate_avatar(
         
         wav2lip_dir = os.path.join(os.path.dirname(__file__), "Wav2Lip")
         inference_script = "inference.py"
-        checkpoint_path = r"C:\Users\Rodrigo Sousa\.gemini\antigravity\wav2lip_checkpoints\wav2lip_gan.pth"
-        
+        #checkpoint_path = r"C:\Users\Rodrigo Sousa\.gemini\antigravity\wav2lip_checkpoints\wav2lip_gan.pth"
+        checkpoint_path = os.path.join(os.path.dirname(__file__), "wav2lip_gan.pth")
         cmd = [
             sys.executable, inference_script,
             "--checkpoint_path", checkpoint_path,
