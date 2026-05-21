@@ -57,6 +57,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Helper function to resize image using HTML5 Canvas
+    function resizeImage(file, maxW, maxH) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > maxW) {
+                            height *= maxW / width;
+                            width = maxW;
+                        }
+                    } else {
+                        if (height > maxH) {
+                            width *= maxH / height;
+                            height = maxH;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    canvas.toBlob((blob) => {
+                        resolve(blob);
+                    }, 'image/jpeg', 0.85); // Compress as JPEG with 85% quality
+                };
+                img.onerror = reject;
+                img.src = e.target.result;
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+
     // Handle form submission
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -72,7 +112,19 @@ document.addEventListener('DOMContentLoaded', () => {
         loader.style.display = 'block';
         
         // Form Data
-        const formData = new FormData(form);
+        const formData = new FormData();
+
+        try {
+            // Resize image to max 800px to avoid Vercel 4.5MB request body size limits
+            const originalFile = imageUpload.files[0];
+            const resizedBlob = await resizeImage(originalFile, 800, 800);
+            formData.append('image', resizedBlob, 'avatar.jpg');
+            formData.append('script', document.getElementById('script-text').value);
+        } catch (err) {
+            console.warn("Client-side image resizing failed, uploading original file: ", err);
+            formData.append('image', imageUpload.files[0]);
+            formData.append('script', document.getElementById('script-text').value);
+        }
 
         try {
             const response = await fetch('/generate', {
