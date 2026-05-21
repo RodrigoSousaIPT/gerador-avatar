@@ -136,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Erro ao gerar avatar: ' + data.error);
             }
         } catch (error) {
-            console.error('Erro na requisição:', error);
             alert('Ocorreu um erro ao comunicar com o servidor.');
         } finally {
             // Restore UI State
