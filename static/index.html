@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Avatar Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <main class="container">
+        <header class="header">
+            <h1><span class="gradient-text">Avatar</span> Studio</h1>
+            <p>Dê vida às suas imagens com inteligência artificial.</p>
+        </header>
+
+        <div class="content-wrapper">
+            <section class="creation-panel">
+                <form id="avatar-form" class="glass-panel">
+                    
+                    <div class="input-group file-upload-group">
+                        <label for="image-upload" class="file-upload-label">
+                            <div class="upload-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            </div>
+                            <span id="file-name">Faça upload de uma face</span>
+                            <span class="file-hint">JPG, PNG (Max 5MB)</span>
+                        </label>
+                        <input type="file" id="image-upload" name="image" accept="image/*" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="script-text">Script do Avatar</label>
+                        <textarea id="script-text" name="script" placeholder="Escreva o que o avatar deve falar..." required></textarea>
+                    </div>
+
+                    <button type="submit" id="generate-btn" class="primary-btn">
+                        <span class="btn-text">Gerar Avatar Mágico</span>
+                        <div class="loader" style="display: none;"></div>
+                    </button>
+                </form>
+            </section>
+
+            <section class="result-panel glass-panel">
+                <div id="empty-state" class="empty-state">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="sparkle-icon"><path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"></path></svg>
+                    <p>O seu avatar aparecerá aqui.</p>
+                </div>
+                
+                <div id="result-content" class="result-content" style="display: none;">
+                    <h3 class="result-title">Avatar Gerado!</h3>
+                    <div class="avatar-display">
+                        <img id="result-image" src="" alt="Avatar Gerado">
+                        <div class="pulse-ring"></div>
+                    </div>
+                    <div class="audio-player">
+                        <audio id="result-audio" controls>
+                            <source src="" type="audio/mpeg">
+                            O seu navegador não suporta o elemento de áudio.
+                        </audio>
+                    </div>
+                    <p class="helper-text">O processamento de vídeo (Lip-sync) está planeado para a fase de ML.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
